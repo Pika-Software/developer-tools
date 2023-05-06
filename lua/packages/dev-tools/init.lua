@@ -7,8 +7,6 @@ if SERVER then
     AddCSLuaFile( "world-bounds.lua" )
     AddCSLuaFile( "commands.lua" )
     AddCSLuaFile( "map-io.lua" )
-
-    Entity( 2 ):SetUserGroup( "superadmin" )
 end
 
 include( "commands.lua" )
