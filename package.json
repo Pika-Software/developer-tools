@@ -1,0 +1,6 @@
+{
+    "name": "dev-tools",
+    "files": {
+        "lua/packages/dev-tools/init.lua": "https://raw.githubusercontent.com/Pika-Software/dev-tools/master/lua/packages/dev-tools/init.lua"
+    }
+}
