@@ -9,22 +9,27 @@ concommand.Add( "developer_time", function()
     logger:Info( "OtherTime: %s", string.FormattedTime( ( SysTime() - CurTime() ) / 60, "%02i:%02i:%02i" ) )
 end )
 
-if CLIENT then return end
+if SERVER then
 
-local function commandAccess( ply )
-    return IsValid( ply ) and ply:IsSuperAdmin() and ply:IsFullyAuthenticated() or ply:IsListenServerHost()
+    local function commandAccess( ply )
+        return IsValid( ply ) and ply:IsSuperAdmin() and ply:IsFullyAuthenticated() or ply:IsListenServerHost()
+    end
+
+    concommand.Add( "strip_weapons", function( ply, cmd, args )
+        if not commandAccess( ply ) then return end
+        ply:StripWeapons()
+    end )
+
+    concommand.Add( "strip_active_weapon", function( ply, cmd, args )
+        if not commandAccess( ply ) then return end
+
+        local wep = ply:GetActiveWeapon()
+        if IsValid( wep ) then
+            ply:StripWeapon( wep )
+        end
+    end )
+
+    return
 end
 
-concommand.Add( "strip_weapons", function( ply, cmd, args )
-    if not commandAccess( ply ) then return end
-    ply:StripWeapons()
-end )
-
-concommand.Add( "strip_active_weapon", function( ply, cmd, args )
-    if not commandAccess( ply ) then return end
-
-    local wep = ply:GetActiveWeapon()
-    if IsValid( wep ) then
-        ply:StripWeapon( wep )
-    end
-end )
+-- CLIENT COMMANDS HERE

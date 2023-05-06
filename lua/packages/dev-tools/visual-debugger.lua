@@ -41,7 +41,6 @@ local angles = {
 function DevTools.VisualDebugger()
     if developer:GetInt() < 2 then
         hook.Remove( "PostDrawOpaqueRenderables", identifier )
-        hook.Remove( "HUDPaint", identifier )
         hook.Remove( "Think", identifier )
         return
     end
@@ -116,12 +115,6 @@ function DevTools.VisualDebugger()
                 cam.End3D2D()
             cam.IgnoreZ( false )
         end
-    end )
-
-    hook.Add( "HUDPaint", identifier, function()
-        if developer:GetInt() < 2 then return end
-        if not debugObject.IsValid then return end
-
     end )
 
 end
