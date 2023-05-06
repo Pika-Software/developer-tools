@@ -59,9 +59,10 @@ function DevTools.MapIO()
     for index, entity in ipairs( NikNaks.CurrentMap:GetEntities() ) do
         local className = entity.classname
         if className == "worldspawn" then continue end
-        if util.IsProp( className ) then continue end
-        if util.IsDoor( className ) then continue end
-        if util.IsWindow( className ) then continue end
+        if util.IsPropClass( className ) then continue end
+        if util.IsDoorClass( className ) then continue end
+        if util.IsWindowClass( className ) then continue end
+        if util.IsInfoNodeClass( className ) then continue end
 
         local data = {
             ["ClassName"] = className,
@@ -73,7 +74,7 @@ function DevTools.MapIO()
             ["Model"] = entity.model
         }
 
-        data.IsSpawnPoint = util.IsSpawnPoint( data.ClassName )
+        data.IsSpawnPoint = util.IsSpawnPointClass( data.ClassName )
 
         local light = entity._light
         if light then
