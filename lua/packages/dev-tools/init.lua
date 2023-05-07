@@ -1,6 +1,10 @@
-import( "https://github.com/Nak2/NikNaks" )
-if not NikNaks then require( "niknaks" ) end
 if not DevTools then _G.DevTools = {} end
+
+if not file.Exists( "includes/modules/niknaks.lua", gpm.LuaRealm ) then
+    import( "https://github.com/Nak2/NikNaks" )
+end
+
+require( "niknaks" )
 
 if SERVER then
     AddCSLuaFile( "visual-debugger.lua" )
