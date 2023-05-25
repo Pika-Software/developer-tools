@@ -7,11 +7,23 @@ local identifier = gpm.Package:GetIdentifier( "world-bounds" )
 local developer = GetConVar( "developer" )
 local Material = Material
 local Vector = Vector
+local Model = Model
+
+local worldAxis = nil
 
 function DevTools.WorldBoundsRendering()
     if developer:GetInt() < 5 then
         hook.Remove( "PreDrawEffects", identifier )
+        if IsValid( worldAxis ) then
+            worldAxis:Remove()
+        end
+
         return
+    end
+
+    if not IsValid( worldAxis ) then
+        worldAxis = ClientsideModel( Model( "models/editor/axis_helper.mdl" ), RENDERGROUP_OTHER )
+        worldAxis:SetNoDraw( true )
     end
 
     local map = NikNaks.CurrentMap
@@ -79,6 +91,9 @@ function DevTools.WorldBoundsRendering()
             render.DrawBeam( bottom[ 2 ], top[ 2 ], 8, 0, 12, worldColor )
             render.DrawBeam( bottom[ 3 ], top[ 3 ], 8, 0, 12, worldColor )
             render.DrawBeam( bottom[ 4 ], top[ 4 ], 8, 0, 12, worldColor )
+
+            -- Axis
+            worldAxis:DrawModel()
         cam.IgnoreZ( false )
     end )
 
