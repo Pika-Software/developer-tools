@@ -15,6 +15,7 @@ local IsValid = IsValid
 local ipairs = ipairs
 local EyePos = EyePos
 local pairs = pairs
+local Model = Model
 
 local identifier = gpm.Package:GetIdentifier( "map-io" )
 local developer = GetConVar( "developer" )
@@ -112,7 +113,7 @@ function DevTools.MapIO()
         for _, data in ipairs( entities ) do
             if data.IsSpawnPoint then
                 if data.ModelEntity == nil then
-                    local clientModel = ClientsideModel( "models/editor/playerstart.mdl", RENDERGROUP_OTHER )
+                    local clientModel = ClientsideModel( Model( "models/editor/playerstart.mdl" ), RENDERGROUP_OTHER )
                     if IsValid( clientModel ) then
                         clientModel:SetModel( "models/editor/playerstart.mdl" )
                         clientModel:SetNoDraw( true )
