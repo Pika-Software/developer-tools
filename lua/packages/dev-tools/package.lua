@@ -1,4 +1,4 @@
 name = "developer-tools"
-version = 000100
+version = 010000
 autorun = true
 logger = true
