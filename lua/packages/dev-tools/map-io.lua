@@ -1,5 +1,3 @@
-require( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
-
 local NikNaks = NikNaks
 local surface = surface
 local render = render
