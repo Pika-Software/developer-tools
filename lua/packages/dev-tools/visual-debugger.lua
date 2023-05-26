@@ -94,19 +94,17 @@ function DevTools.VisualDebugger()
             ["filter"] = ply
         } ).Entity
 
-        if IsValid( entity ) then
-            local index = entity:EntIndex()
-            if index ~= debugObject.Index then
-                debugObject.Index = index
-                debugObject.Entity = entity
-                return
-            end
+        if not IsValid( entity ) then
+            entity = debugObject.Entity
         end
 
-        entity = debugObject.Entity
+        if not IsValid( entity ) then
+            debugObject.IsValid = false
+            return
+        end
 
-        debugObject.IsValid = IsValid( entity )
-        if not debugObject.IsValid then return end
+        debugObject.Entity = entity
+        debugObject.IsValid = true
 
         -- Position & angles
         debugObject.Origin = entity:GetPos()
@@ -216,8 +214,6 @@ function DevTools.VisualDebugger()
             surface.SetTextColor( data.TextColor )
             surface.SetFont( "Trebuchet24" )
             surface.DrawText( data.Text )
-
-            -- draw.DrawText( data.Text, "Trebuchet24", x - hud.Width / 2, data.Y, data.TextColor, TEXT_ALIGN_CENTER )
         end
     end )
 end
