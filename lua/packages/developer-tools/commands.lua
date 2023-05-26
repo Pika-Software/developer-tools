@@ -111,7 +111,7 @@ local function printEntityInfo( entity )
         if count > 0 then
             local flexes = "\n"
             for id = 0, count do
-                flexes = flexes .. "\t[" .. id .. "] = \"" .. language_GetPhrase( entity:GetFlexName( id ) or "" ) .. "\",\n"
+                flexes = flexes .. "\t[" .. id .. "] = \"" .. ( entity:GetFlexName( id ) or "" ) .. "\",\n"
             end
 
             logger:Info( "Flexes: {%s}", flexes )
