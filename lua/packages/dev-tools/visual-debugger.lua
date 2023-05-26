@@ -1,17 +1,21 @@
+local surface = surface
 local render = render
 local hook = hook
-local draw = draw
 local hook = hook
 local cam = cam
 
 local TEXT_ALIGN_CENTER = TEXT_ALIGN_CENTER
 local util_TraceLine = util.TraceLine
+local draw_DrawText = draw.DrawText
+local table_Empty = table.Empty
+local SortedPairs = SortedPairs
 local LocalPlayer = LocalPlayer
 local math_min = math.min
 local IsValid = IsValid
 local Vector = Vector
 local ipairs = ipairs
 local type = type
+local ScrW = ScrW
 
 local identifier = gpm.Package:GetIdentifier( "visual-debugger" )
 local developer = GetConVar( "developer" )
@@ -66,8 +70,6 @@ local function toString( any )
         end
 
     end
-
-    return ""
 end
 
 local hud = {}
@@ -138,6 +140,7 @@ function DevTools.VisualDebugger()
         debugObject.ClassName = entity:GetClass()
         debugObject.RenderGroup = entity:GetRenderGroup()
         debugObject.CollisionGroup = entity:GetCollisionGroup()
+        debugObject.Language = entity:IsScripted() and "gLua" or "C++"
 
         -- Health
         do
@@ -154,15 +157,18 @@ function DevTools.VisualDebugger()
             debugObject[ "[NW] " ..  key ] = value
         end
 
-        table.Empty( hud )
+        table_Empty( hud )
 
         local width = 0
         for key, value in SortedPairs( debugObject ) do
             if hudBlacklist[ key ] then continue end
 
+            value = toString( value )
+            if not value then continue end
+
             local index = #hud
             local inverted = index % 2 ~= 0
-            local text = key .. ": " .. toString( value )
+            local text = key .. ": " .. value
 
             surface.SetFont( "Trebuchet24" )
             local textWidth, textHeight = surface.GetTextSize( text )
@@ -194,7 +200,7 @@ function DevTools.VisualDebugger()
 
             cam.IgnoreZ( true )
                 cam.Start3D2D( data[2], data[3], 0.1 )
-                    draw.DrawText( axis[ index ], "Default", 0, 0, color, TEXT_ALIGN_CENTER )
+                    draw_DrawText( axis[ index ], "Default", 0, 0, color, TEXT_ALIGN_CENTER )
                 cam.End3D2D()
             cam.IgnoreZ( false )
         end
