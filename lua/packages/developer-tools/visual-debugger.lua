@@ -101,12 +101,15 @@ function DevTools.VisualDebugger()
         end
 
         if not IsValid( entity ) then
-            debugObject.IsValid = false
+            if debugObject.IsValid then
+                table_Empty( debugObject )
+                debugObject.IsValid = false
+            end
+
             return
         end
 
         debugObject.Entity = entity
-        debugObject.IsValid = true
 
         -- Position & angles
         debugObject.Origin = entity:GetPos()
@@ -185,7 +188,7 @@ function DevTools.VisualDebugger()
         end
 
         hud.Width = width + 10
-        hud.Ready = true
+        debugObject.IsValid = true
     end )
 
     hook.Add( "PostDrawTranslucentRenderables", identifier, function()
@@ -207,7 +210,7 @@ function DevTools.VisualDebugger()
     end )
 
     hook.Add( "HUDPaint", identifier, function()
-        if not hud.Ready then return end
+        if not debugObject.IsValid then return end
         local x = ScrW() - 10 - hud.Width
 
         for index, data in ipairs( hud ) do
