@@ -86,7 +86,7 @@ local function printEntityInfo( entity )
         logger:Info( "Information: \"%s\"", language_GetPhrase( data.Information ) )
         logger:Info( "Author: \"%s\"", data.Author )
     elseif entity:IsNPC() then
-        local data = list_Get( "NPC" )[ class ]
+        local data = list_Get( "NPC" )[ className ]
         logger:Info( "Name: \"%s\"", language_GetPhrase( data.Name ) )
 
         local wep = entity:GetActiveWeapon()
