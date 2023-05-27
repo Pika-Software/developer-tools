@@ -1,4 +1,4 @@
-require( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
+install( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
 if not util.IsLuaModuleInstalled( "niknaks" ) then
     import( "https://github.com/Nak2/NikNaks" )
 end
