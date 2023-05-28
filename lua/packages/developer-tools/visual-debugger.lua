@@ -111,6 +111,13 @@ function DevTools.VisualDebugger()
 
         debugObject.Entity = entity
 
+        -- ID's
+        debugObject.Index = entity:EntIndex()
+
+        if entity:IsPlayer() then
+            debugObject.UserID = entity:UserID()
+        end
+
         -- Position & angles
         debugObject.Origin = entity:GetPos()
         debugObject.Angles = entity:GetAngles()
