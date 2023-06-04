@@ -129,13 +129,13 @@ function DevTools.VisualDebugger()
 
         -- Lines
         local box = ( maxs - mins )
-        local lenght = math_min( box[1], box[2], box[3] ) / 4
+        local length = math_min( box[1], box[2], box[3] ) / 4
         local startPos = entity:LocalToWorld( vector_zero )
 
         local lines = {}
         for index = 1, 3 do
             local vec = Vector()
-            vec[ index ] = lenght
+            vec[ index ] = length
             lines[ index ] = { startPos, entity:LocalToWorld( vec ), entity:LocalToWorldAngles( angles[ index ] ) }
         end
 
