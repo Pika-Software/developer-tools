@@ -102,12 +102,13 @@ function DevTools.VisualDebugger()
 
         if not IsValid( entity ) then
             if debugObject.IsValid then
-                table_Empty( debugObject )
                 debugObject.IsValid = false
             end
 
             return
         end
+
+        table_Empty( debugObject )
 
         debugObject.Entity = entity
 
