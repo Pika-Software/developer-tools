@@ -15,7 +15,6 @@ local EyePos = EyePos
 local pairs = pairs
 local Model = Model
 
-local identifier = gpm.Package:GetIdentifier( "map-io" )
 local developer = GetConVar( "developer" )
 local materialsCache = {}
 local aliases = {
@@ -26,12 +25,12 @@ local aliases = {
 local distance = CreateClientConVar( "developer_io_distance", "2048", true, false, "Limiting the rendering distance of the map entities, the smaller, the better the performance.", 128, 16384 ):GetInt() ^ 2
 cvars.AddChangeCallback( "developer_io_distance", function( _, __, value )
     distance = ( tonumber( value ) or 0 ) ^ 2
-end, identifier )
+end, "Map-IO" )
 
 local ignoreZ = CreateClientConVar( "developer_io_ignorez", "0", true, false, "Ignore Z for map entities. (ignore walls)", 0, 1 ):GetBool()
 cvars.AddChangeCallback( "developer_io_ignorez", function( _, __, value )
     ignoreZ = value == "1"
-end, identifier )
+end, "Map-IO" )
 
 local entities = DevTools.Entities
 if not entities then
@@ -40,9 +39,8 @@ end
 
 function DevTools.MapIO()
     if developer:GetInt() < 4 then
-        hook.Remove( "PostDrawTranslucentRenderables", identifier )
-        hook.Remove( "HUDPaint", identifier )
-        hook.Remove( "Think", identifier )
+        hook.Remove( "PostDrawTranslucentRenderables", "Map-IO" )
+        hook.Remove( "Think", "Map-IO" )
         return
     end
 
@@ -106,7 +104,7 @@ function DevTools.MapIO()
         end
     end
 
-    hook.Add( "Think", identifier, function()
+    hook.Add( "Think", "Map-IO", function()
         local eyePos = EyePos()
         for _, data in ipairs( entities ) do
             if data.IsSpawnPoint then
@@ -141,7 +139,7 @@ function DevTools.MapIO()
         end
     end )
 
-    hook.Add( "PostDrawTranslucentRenderables", identifier, function()
+    hook.Add( "PostDrawTranslucentRenderables", "Map-IO", function()
         for _, data in ipairs( entities ) do
             if not data.IsVisible then continue end
             local pos = data.Origin
@@ -200,6 +198,6 @@ end
 
 cvars.AddChangeCallback( "developer", function()
     util.NextTick( DevTools.MapIO )
-end, identifier )
+end, "Map-IO" )
 
 DevTools.MapIO()

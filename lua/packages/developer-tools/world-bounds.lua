@@ -3,7 +3,6 @@ local render = render
 local hook = hook
 local cam = cam
 
-local identifier = gpm.Package:GetIdentifier( "world-bounds" )
 local developer = GetConVar( "developer" )
 local Material = Material
 local Vector = Vector
@@ -13,7 +12,7 @@ local worldAxis = nil
 
 function DevTools.WorldBoundsRendering()
     if developer:GetInt() < 5 then
-        hook.Remove( "PreDrawEffects", identifier )
+        hook.Remove( "PreDrawEffects", "World-Bounds" )
         if IsValid( worldAxis ) then
             worldAxis:Remove()
         end
@@ -58,7 +57,7 @@ function DevTools.WorldBoundsRendering()
         worldColor = Color( 225, 125, 25 )
     end
 
-    hook.Add( "PreDrawEffects", identifier, function()
+    hook.Add( "PreDrawEffects", "World-Bounds", function()
         cam.IgnoreZ( true )
             render.SetMaterial( boundMaterial )
 
@@ -101,6 +100,6 @@ end
 
 cvars.AddChangeCallback( "developer", function()
     util.NextTick( DevTools.WorldBoundsRendering )
-end, identifier )
+end, "World-Bounds" )
 
 DevTools.WorldBoundsRendering()

@@ -17,7 +17,6 @@ local ipairs = ipairs
 local type = type
 local ScrW = ScrW
 
-local identifier = gpm.Package:GetIdentifier( "visual-debugger" )
 local developer = GetConVar( "developer" )
 local vector_zero = Vector()
 local debugObject = {
@@ -81,13 +80,13 @@ local hudBlacklist = {
 
 function DevTools.VisualDebugger()
     if developer:GetInt() < 2 then
-        hook.Remove( "PostDrawTranslucentRenderables", identifier )
-        hook.Remove( "HUDPaint", identifier )
-        hook.Remove( "Think", identifier )
+        hook.Remove( "PostDrawTranslucentRenderables", "Visual-Debugger" )
+        hook.Remove( "HUDPaint", "Visual-Debugger" )
+        hook.Remove( "Think", "Visual-Debugger" )
         return
     end
 
-    hook.Add( "Think", identifier, function()
+    hook.Add( "Think", "Visual-Debugger", function()
         local ply = LocalPlayer()
         local start = ply:EyePos()
         local entity = util_TraceLine( {
@@ -199,7 +198,7 @@ function DevTools.VisualDebugger()
         debugObject.IsValid = true
     end )
 
-    hook.Add( "PostDrawTranslucentRenderables", identifier, function()
+    hook.Add( "PostDrawTranslucentRenderables", "Visual-Debugger", function()
         if developer:GetInt() < 2 then return end
         if not debugObject.IsValid then return end
 
@@ -217,7 +216,7 @@ function DevTools.VisualDebugger()
         end
     end )
 
-    hook.Add( "HUDPaint", identifier, function()
+    hook.Add( "HUDPaint", "Visual-Debugger", function()
         if not debugObject.IsValid then return end
         local x = ScrW() - 10 - hud.Width
 
@@ -237,6 +236,6 @@ end
 
 cvars.AddChangeCallback( "developer", function()
     util.NextTick( DevTools.VisualDebugger )
-end, identifier )
+end, "Visual-Debugger" )
 
 DevTools.VisualDebugger()
