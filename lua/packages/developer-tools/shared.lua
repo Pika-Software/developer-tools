@@ -1,6 +1,20 @@
+install( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
+
+if not util.IsLuaModuleInstalled( "niknaks" ) then
+    import( "https://github.com/Nak2/NikNaks" )
+end
+
+if not NikNaks then
+    require( "niknaks" )
+end
+
+if not DevTools then
+    DevTools = {}
+    _G.DevTools = DevTools
+end
+
 local concommand = concommand
 local logger = gpm.Logger
-local IsValid = IsValid
 
 concommand.Add( "developer_time", function()
     logger:Info( "Time: %s", os.date( "%H:%M:%S - %d/%m/%Y", os.time() ) )
@@ -9,30 +23,12 @@ concommand.Add( "developer_time", function()
     logger:Info( "OtherTime: %s", string.FormattedTime( ( SysTime() - CurTime() ) / 60, "%02i:%02i:%02i" ) )
 end )
 
-if SERVER then
-    local function commandAccess( ply )
-        return IsValid( ply ) and ply:IsSuperAdmin() and ply:IsFullyAuthenticated() or ply:IsListenServerHost()
-    end
-
-    concommand.Add( "strip_weapons", function( ply, cmd, args )
-        if not commandAccess( ply ) then return end
-        ply:StripWeapons()
-    end )
-
-    concommand.Add( "strip_active_weapon", function( ply, cmd, args )
-        if not commandAccess( ply ) then return end
-
-        local wep = ply:GetActiveWeapon()
-        if not IsValid( wep ) then return end
-        ply:StripWeapon( wep )
-    end )
-
-    return
-end
+if SERVER then return end
 
 local language_GetPhrase = language.GetPhrase
 local game_GetAmmoName = game.GetAmmoName
 local list_Get = list.Get
+local IsValid = IsValid
 local ipairs = ipairs
 local type = type
 local MsgN = MsgN

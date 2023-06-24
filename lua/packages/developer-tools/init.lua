@@ -1,23 +1,29 @@
-install( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
-if not util.IsLuaModuleInstalled( "niknaks" ) then
-    import( "https://github.com/Nak2/NikNaks" )
-end
+AddCSLuaFile( "shared.lua" )
+include( "shared.lua" )
 
-require( "niknaks" )
+AddCSLuaFile( "visual-debugger.lua" )
+AddCSLuaFile( "world-bounds.lua" )
+AddCSLuaFile( "map-io.lua" )
 
-if not DevTools then _G.DevTools = {} end
+do
 
-if SERVER then
-    AddCSLuaFile( "visual-debugger.lua" )
-    AddCSLuaFile( "world-bounds.lua" )
-    AddCSLuaFile( "commands.lua" )
-    AddCSLuaFile( "map-io.lua" )
-end
+    local commandAccess = function( ply )
+        return IsValid( ply ) and ply:IsSuperAdmin() and ply:IsFullyAuthenticated() or ply:IsListenServerHost()
+    end
 
-include( "commands.lua" )
+    local IsValid = IsValid
 
-if CLIENT then
-    include( "visual-debugger.lua" )
-    include( "world-bounds.lua" )
-    include( "map-io.lua" )
+    concommand.Add( "strip_weapons", function( ply, cmd, args )
+        if not commandAccess( ply ) then return end
+        ply:StripWeapons()
+    end )
+
+    concommand.Add( "strip_active_weapon", function( ply, cmd, args )
+        if not commandAccess( ply ) then return end
+
+        local wep = ply:GetActiveWeapon()
+        if not IsValid( wep ) then return end
+        ply:StripWeapon( wep )
+    end )
+
 end
