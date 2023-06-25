@@ -29,17 +29,17 @@ function DevTools.WorldBoundsRendering()
     local mins, maxs = map:WorldMin(), map:WorldMax()
 
     local top = {
-        Vector( mins.x, mins.y, maxs.z ),
-        Vector( mins.x, maxs.y, maxs.z ),
-        Vector( maxs.x, maxs.y, maxs.z ),
-        Vector( maxs.x, mins.y, maxs.z )
+        Vector( mins[ 1 ], mins[ 2 ], maxs[ 3 ] ),
+        Vector( mins[ 1 ], maxs[ 2 ], maxs[ 3 ] ),
+        Vector( maxs[ 1 ], maxs[ 2 ], maxs[ 3 ] ),
+        Vector( maxs[ 1 ], mins[ 2 ], maxs[ 3 ] )
     }
 
     local bottom = {
-        Vector( mins.x, mins.y, mins.z ),
-        Vector( mins.x, maxs.y, mins.z ),
-        Vector( maxs.x, maxs.y, mins.z ),
-        Vector( maxs.x, mins.y, mins.z )
+        Vector( mins[ 1 ], mins[ 2 ], mins[ 3 ] ),
+        Vector( mins[ 1 ], maxs[ 2 ], mins[ 3 ] ),
+        Vector( maxs[ 1 ], maxs[ 2 ], mins[ 3 ] ),
+        Vector( maxs[ 1 ], mins[ 2 ], mins[ 3 ] )
     }
 
     local boundMaterial = DevTools.BoundBaterial

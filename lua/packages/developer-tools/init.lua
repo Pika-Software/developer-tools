@@ -1,9 +1,4 @@
-AddCSLuaFile( "shared.lua" )
 include( "shared.lua" )
-
-AddCSLuaFile( "map-io.lua" )
-AddCSLuaFile( "world-bounds.lua" )
-AddCSLuaFile( "visual-debugger.lua" )
 
 do
 
