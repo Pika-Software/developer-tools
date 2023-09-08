@@ -1,16 +1,8 @@
 install( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
-
-if not util.IsLuaModuleInstalled( "niknaks" ) then
-    import( "https://github.com/Nak2/NikNaks" )
-end
-
-if not NikNaks then
-    require( "niknaks" )
-end
+install( "niknaks", "https://github.com/Nak2/NikNaks" )
 
 if not DevTools then
     DevTools = {}
-    _G.DevTools = DevTools
 end
 
 local concommand = concommand
