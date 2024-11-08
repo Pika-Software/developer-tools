@@ -1,5 +1,5 @@
 # developer-tools
-A powerful set of tools for debugging entities and viewing map mechanisms (kind of like Map IO).
+A powerful set of tools for debugging entities and viewing map mechanisms (something like Map IO).
 
 ## ConVars
 ### `developer` <0/5> - Set developer message level.
